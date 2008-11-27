@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @entry_type.name %>
+</p>
+
+<p>
+  <b>Cumulative:</b>
+  <%=h @entry_type.cumulative %>
+</p>
+
+
+<%= link_to 'Edit', edit_entry_type_path(@entry_type) %> |
+<%= link_to 'Back', entry_types_path %>

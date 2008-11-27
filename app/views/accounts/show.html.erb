@@ -1,0 +1,23 @@
+<p>
+  <b>Name:</b>
+  <%=h @account.name %>
+</p>
+
+<p>
+  <b>Liability:</b>
+  <%=h @account.liability %>
+</p>
+
+<p>
+  <b>Risk class:</b>
+  <%=h @account.risk_class_id %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%=h @account.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_account_path(@account) %> |
+<%= link_to 'Back', accounts_path %>

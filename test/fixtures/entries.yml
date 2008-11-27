@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  account_id: 1
+  effective_date: 2008-11-27
+  entry_type_id: 1
+  value: 1.5
+  notes: MyText
+
+two:
+  account_id: 1
+  effective_date: 2008-11-27
+  entry_type_id: 1
+  value: 1.5
+  notes: MyText

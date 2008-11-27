@@ -1,0 +1,2 @@
+module RiskClassesHelper
+end

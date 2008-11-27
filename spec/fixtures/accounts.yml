@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  liability: false
+  risk_class_id: 1
+  notes: MyText
+
+two:
+  name: MyString
+  liability: false
+  risk_class_id: 1
+  notes: MyText
