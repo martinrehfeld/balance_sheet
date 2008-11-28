@@ -38,7 +38,7 @@ module BalanceSheetHelper
       "chd=t:#{data_values.map{|s| s.join(',')}.join('|')}&" << # data sets
       "chds=#{-bound},#{bound}&chxr=2,#{-bound},#{bound}|5,#{-bound},#{bound}&" << # scaling and y axis range
       "chxt=x,x,y,t,t,r&chxl=0:|#{month_labels.join('|')}|1:|#{year_labels.join('|')}|4:||||||Total:|3:|#{total_labels.join('|')}&" << # axis & labels
-      "chs=700x400&chg=100,50,1,5&chbh=25,15&chco=#{set_colors.join(',')}&" << # size, grid and style
+      "chs=710x400&chg=100,50,1,5&chbh=25,15&chco=#{set_colors.join(',')}&" << # size, grid and style
       "chdl=#{set_labels.join('|')}&chdlp=r&" << # legend
       "chtt=Monthly Balances By Risk Class" # title
   end
