@@ -3,5 +3,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :entry_types
   map.resources :risk_classes
   map.resources :accounts
-  map.root      :entries
+  map.root      :controller => 'balance_sheet'
+  map.connect   'chart.:format', :controller => 'balance_sheet'
 end
