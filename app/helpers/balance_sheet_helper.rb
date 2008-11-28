@@ -31,14 +31,15 @@ module BalanceSheetHelper
     month_labels = dataset.collect {|m| m[:date].strftime("%b") }
     year_labels = dataset.collect {|m| m[:date].month == 1 ? "#{m[:date].year}..." : "" }
     
-    bound = [dataset.collect {|m| m[:credit] }.max, dataset.collect {|m| m[:debit] }.min].map(&:abs).max
+    lower_bound = dataset.collect {|m| m[:debit] }.min * 1.05
+    upper_bound = dataset.collect {|m| m[:credit] }.max * 1.05
     
     "http://chart.apis.google.com/chart?" <<
       "cht=bvs&" << # vertical stacked bar chart
       "chd=t:#{data_values.map{|s| s.join(',')}.join('|')}&" << # data sets
-      "chds=#{-bound},#{bound}&chxr=2,#{-bound},#{bound}|5,#{-bound},#{bound}&" << # scaling and y axis range
+      "chds=#{lower_bound},#{upper_bound}&chxr=2,#{lower_bound},#{upper_bound}|5,#{lower_bound},#{upper_bound}&" << # scaling and y axis range
       "chxt=x,x,y,t,t,r&chxl=0:|#{month_labels.join('|')}|1:|#{year_labels.join('|')}|4:||||||Total:|3:|#{total_labels.join('|')}&" << # axis & labels
-      "chs=710x400&chg=100,50,1,5&chbh=25,15&chco=#{set_colors.join(',')}&" << # size, grid and style
+      "chs=710x400&chbh=25,15&chco=#{set_colors.join(',')}&" << # size and style
       "chdl=#{set_labels.join('|')}&chdlp=r&" << # legend
       "chtt=Monthly Balances By Risk Class" # title
   end
