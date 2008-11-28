@@ -12,6 +12,8 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
     ,'entry[notes]': 'Notes'
   },
   title: 'Entries',
+  collapseButtonLabel: 'Collapse',
+  collapseButtonTooltip: 'Collapse all Account groups',
   newButtonLabel: 'New...',
   newButtonTooltip: 'Create new Entry',
   editButtonLabel: 'Edit...',
@@ -138,6 +140,8 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
                 ,{ name: 'entry[entry_type_id]', mapping: 'entry.entry_type_id', type: 'int' }
                 ,{ name: 'entry[value]', mapping: 'entry.value', type: 'float' }
                 ,{ name: 'entry[notes]', mapping: 'entry.notes' }
+                ,{ name: 'virtual_attributes[account_name]', mapping: 'entry.account_name' }
+                ,{ name: 'virtual_attributes[entry_type_name]', mapping: 'entry.entry_type_name' }
               ]),
         remoteSort: true, // turn on server-side sorting
         sortInfo: {field: 'entry[account_id],entry[effective_date]', direction: 'ASC'},
@@ -147,7 +151,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
     var cm = new Ext.grid.ColumnModel([
        { header: scaffoldPanel.labels['entry[account_id]'], dataIndex: 'entry[account_id]', hideable: false }
       ,{ header: scaffoldPanel.labels['entry[effective_date]'], dataIndex: 'entry[effective_date]', renderer: Ext.util.Format.dateRenderer('m/d/Y') }
-      ,{ header: scaffoldPanel.labels['entry[entry_type_id]'], dataIndex: 'entry[entry_type_id]' }
+      ,{ header: scaffoldPanel.labels['entry[entry_type_id]'], dataIndex: 'virtual_attributes[entry_type_name]' }
       ,{ header: scaffoldPanel.labels['entry[value]'], dataIndex: 'entry[value]' }
       ,{ header: scaffoldPanel.labels['entry[notes]'], dataIndex: 'entry[notes]' }
     ]);
@@ -197,6 +201,10 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
       }
     }
     
+    function collapseButtonHandler() {
+      scaffoldPanel.getGridPanel().getView().collapseAllGroups();
+    }
+    
     Ext.apply(this, {
       items: [{
         // add the grid panel to center region
@@ -206,7 +214,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
         ds: ds,
         cm: cm,
         view: new Ext.grid.GroupingView({
-          groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Entries" : "Entry"]})',
+          groupTextTpl: '{[values.rs[0].data["virtual_attributes[account_name]"]]} ({[values.rs.length]} {[values.rs.length > 1 ? "Entries" : "Entry"]})',
           enableGroupingMenu: false,
           hideGroupedColumn: true,
           startCollapsed: true
@@ -240,6 +248,11 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
               tooltip: scaffoldPanel.deleteButtonTooltip,
               handler: deleteButtonHandler,
               iconCls: 'remove'
+          }, '-', {
+              text:    scaffoldPanel.collapseButtonLabel,
+              tooltip: scaffoldPanel.collapseButtonTooltip,
+              handler: collapseButtonHandler,
+              iconCls: 'collapse'
           }, '->', {
             id: 'entry-form-toggle',
             iconCls: 'details',
@@ -299,11 +312,11 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
 
         baseParams: scaffoldPanel.baseParams,
         items: [
-        { fieldLabel: scaffoldPanel.labels['entry[account_id]'], name: 'entry[account_id]', xtype: 'numberfield' },
-        { fieldLabel: scaffoldPanel.labels['entry[effective_date]'], name: 'entry[effective_date]', xtype: 'datefield', format: 'm/d/Y' },
-        { fieldLabel: scaffoldPanel.labels['entry[entry_type_id]'], name: 'entry[entry_type_id]', xtype: 'numberfield' },
-        { fieldLabel: scaffoldPanel.labels['entry[value]'], name: 'entry[value]', xtype: 'numberfield' },
-        { fieldLabel: scaffoldPanel.labels['entry[notes]'], name: 'entry[notes]', xtype: 'textarea' }
+          { fieldLabel: scaffoldPanel.labels['entry[account_id]'], name:'virtual_attributes[account_name]', hiddenName: 'entry[account_id]', xtype: 'combo', store: scaffoldPanel.accountNamesStore, triggerAction: 'all', forceSelection: true },
+          { fieldLabel: scaffoldPanel.labels['entry[effective_date]'], name: 'entry[effective_date]', xtype: 'datefield', format: 'm/d/Y' },
+          { fieldLabel: scaffoldPanel.labels['entry[entry_type_id]'], name:'virtual_attributes[entry_type_name]', hiddenName: 'entry[entry_type_id]', xtype: 'combo', store: scaffoldPanel.entryTypeNamesStore, triggerAction: 'all', forceSelection: true },
+          { fieldLabel: scaffoldPanel.labels['entry[value]'], name: 'entry[value]', xtype: 'numberfield' },
+          { fieldLabel: scaffoldPanel.labels['entry[notes]'], name: 'entry[notes]', xtype: 'textarea' }
         ],
 
         onOk: function() {
