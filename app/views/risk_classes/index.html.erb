@@ -3,13 +3,11 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Color</th>
   </tr>
 
 <% for risk_class in @risk_classes %>
   <tr>
     <td><%=h risk_class.name %></td>
-    <td><%=h risk_class.color %></td>
     <td><%= link_to 'Show', risk_class %></td>
     <td><%= link_to 'Edit', edit_risk_class_path(risk_class) %></td>
     <td><%= link_to 'Destroy', risk_class, :confirm => 'Are you sure?', :method => :delete %></td>

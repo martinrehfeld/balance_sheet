@@ -12,13 +12,13 @@ class BalanceSheet
         balance = account.monthly_balance(date.year, date.month)
 
         if account.liability?
-          credit += -balance
-          credit_by_risk_class[account.risk_class_id] ||= 0
-          credit_by_risk_class[account.risk_class_id] += -balance
-        else
-          debit  += balance
+          debit  += -balance
           debit_by_risk_class[account.risk_class_id] ||= 0
-          debit_by_risk_class[account.risk_class_id] += balance
+          debit_by_risk_class[account.risk_class_id] += -balance
+        else
+          credit += balance
+          credit_by_risk_class[account.risk_class_id] ||= 0
+          credit_by_risk_class[account.risk_class_id] += balance
         end
       end
 
