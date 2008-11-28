@@ -9,4 +9,8 @@ class Entry < ActiveRecord::Base
   def entry_type_name
     entry_type && entry_type.name
   end
+  
+  def account_balance
+    account && Account.total_balance(account)
+  end
 end

@@ -142,6 +142,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
                 ,{ name: 'entry[notes]', mapping: 'entry.notes' }
                 ,{ name: 'virtual_attributes[account_name]', mapping: 'entry.account_name' }
                 ,{ name: 'virtual_attributes[entry_type_name]', mapping: 'entry.entry_type_name' }
+                ,{ name: 'virtual_attributes[account_balance]', mapping: 'entry.account_balance' }
               ]),
         remoteSort: true, // turn on server-side sorting
         sortInfo: {field: 'entry[account_id],entry[effective_date]', direction: 'ASC'},
@@ -214,7 +215,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
         ds: ds,
         cm: cm,
         view: new Ext.grid.GroupingView({
-          groupTextTpl: '{[values.rs[0].data["virtual_attributes[account_name]"]]} ({[values.rs.length]} {[values.rs.length > 1 ? "Entries" : "Entry"]})',
+          groupTextTpl: '{[values.rs[0].data["virtual_attributes[account_name]"]]} ({[values.rs.length]} {[values.rs.length > 1 ? "Entries" : "Entry"]}, Balance: {[values.rs[0].data["virtual_attributes[account_balance]"]]} EUR)',
           enableGroupingMenu: false,
           hideGroupedColumn: true,
           startCollapsed: true

@@ -13,7 +13,7 @@ class EntriesController < ApplicationController
   def index
     respond_to do |format|
       format.html     # index.html.erb (no data required)
-      format.ext_json { render :json => @entries.to_ext_json(:methods => [:account_name, :entry_type_name], :class => Entry, :count => Entry.count(options_from_search(Entry))) }
+      format.ext_json { render :json => @entries.to_ext_json(:methods => [:account_name, :entry_type_name, :account_balance], :class => Entry, :count => Entry.count(options_from_search(Entry))) }
     end
   end
 
