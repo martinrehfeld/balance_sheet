@@ -23,8 +23,6 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
   deleteButtonTooltip: 'Delete selected Entry...',
   deleteConfirmationText: 'Really delete?',
   deleteFailedText: 'Delete operation failed. The record might have been deleted by someone else.',
-  paginationStatusTemplate: 'Record {0} - {1} of {2}',
-  paginationNoRecordsText: 'No records found',
   savingMessage: 'Saving...',
   saveFailedText: 'Save operation failed. The record might have been deleted by someone else.',
 
@@ -33,7 +31,6 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
   //
   url: '#',
   baseParams: {},
-  recordsPerPage: 50,
 
   //
   // private properties
@@ -125,7 +122,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
   initComponent: function() {
     var scaffoldPanel = this; // save scope for later reference
 
-    var ds = new Ext.data.Store({
+    var ds = new Ext.data.GroupingStore({
       proxy: new Ext.data.HttpProxy({
                  url: scaffoldPanel.url + '?format=ext_json',
                  method: 'GET'
@@ -143,12 +140,12 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
                 ,{ name: 'entry[notes]', mapping: 'entry.notes' }
               ]),
         remoteSort: true, // turn on server-side sorting
-        sortInfo: {field: 'id', direction: 'ASC'}
+        sortInfo: {field: 'entry[account_id],entry[effective_date]', direction: 'ASC'},
+        groupField: 'entry[account_id]'
     });
 
     var cm = new Ext.grid.ColumnModel([
-       {id: 'id', header: scaffoldPanel.labels['id'], width: 40, dataIndex: 'id'}
-      ,{ header: scaffoldPanel.labels['entry[account_id]'], dataIndex: 'entry[account_id]' }
+       { header: scaffoldPanel.labels['entry[account_id]'], dataIndex: 'entry[account_id]', hideable: false }
       ,{ header: scaffoldPanel.labels['entry[effective_date]'], dataIndex: 'entry[effective_date]', renderer: Ext.util.Format.dateRenderer('m/d/Y') }
       ,{ header: scaffoldPanel.labels['entry[entry_type_id]'], dataIndex: 'entry[entry_type_id]' }
       ,{ header: scaffoldPanel.labels['entry[value]'], dataIndex: 'entry[value]' }
@@ -208,6 +205,12 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
         id: 'entry-grid',
         ds: ds,
         cm: cm,
+        view: new Ext.grid.GroupingView({
+          groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Entries" : "Entry"]})',
+          enableGroupingMenu: false,
+          hideGroupedColumn: true,
+          startCollapsed: true
+        }),
         sm: new Ext.grid.RowSelectionModel({
           singleSelect:true,
           listeners: {
@@ -248,13 +251,6 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
             }
           }, '->'
         ],
-        bbar: new Ext.PagingToolbar({
-                  pageSize: scaffoldPanel.recordsPerPage,
-                  store: ds,
-                  displayInfo: true,
-                  displayMsg: scaffoldPanel.paginationStatusTemplate,
-                  emptyMsg:   scaffoldPanel.paginationNoRecordsText
-        }),
         plugins:[new Ext.ux.grid.Search({
                     position:'top'
                 })],
@@ -394,7 +390,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
     ExtScaffold.Entry.superclass.onRender.apply(this, arguments);
 
     // reset form and trigger initial data load
-    this.getStore().load({params: {start: 0, limit: this.recordsPerPage} });
+    this.getStore().load();
   }
 });
 
