@@ -8,7 +8,7 @@ module BalanceSheetHelper
     # collect credit data
     colors.reverse_each do |colspec|
       risk_class_id = colspec.first
-      values = dataset.collect {|m| m[:credit_by_risk_class][risk_class_id] || 0.0 }
+      values = dataset.collect {|m| m[:credit_by_risk_class][risk_class_id].to_i / 1000  || 0.0 }
       if !values.all?(&:zero?)
         set_colors << colspec[1][:credit]
         set_labels << "credit: #{colspec[1][:label]}"
@@ -19,7 +19,7 @@ module BalanceSheetHelper
     # collect debit data 
     colors.each do |colspec|
       risk_class_id = colspec.first
-      values = dataset.collect {|m| m[:debit_by_risk_class][risk_class_id] || 0.0 }
+      values = dataset.collect {|m| m[:debit_by_risk_class][risk_class_id].to_i / 1000 || 0.0 }
       if !values.all?(&:zero?)
         set_colors << colspec[1][:debit]
         set_labels << "debit: #{colspec[1][:label]}"
@@ -27,12 +27,12 @@ module BalanceSheetHelper
       end
     end
     
-    total_labels = dataset.collect {|m| "%0.0f" % m[:total] }
+    total_labels = dataset.collect {|m| "%0.3f" % (m[:total] / 1000) }
     month_labels = dataset.collect {|m| m[:date].strftime("%b") }
-    year_labels = dataset.collect {|m| m[:date].month == 1 ? "#{m[:date].year}..." : "" }
+    year_labels = dataset.collect {|m| m[:date].month == 1 ? m[:date].year : "" }
     
-    lower_bound = dataset.collect {|m| m[:debit] }.min * 1.05
-    upper_bound = dataset.collect {|m| m[:credit] }.max * 1.05
+    lower_bound = dataset.collect {|m| m[:debit] }.min * 1.1 / 1000   # * 1.1. = 10% "margin" on axis
+    upper_bound = dataset.collect {|m| m[:credit] }.max * 1.1 / 1000  # * 1.1. = 10% "margin" on axis
     
     "http://chart.apis.google.com/chart?" <<
       "cht=bvs&" << # vertical stacked bar chart
@@ -41,7 +41,7 @@ module BalanceSheetHelper
       "chxt=x,x,y,t,t,r&chxl=0:|#{month_labels.join('|')}|1:|#{year_labels.join('|')}|4:||||||Total:|3:|#{total_labels.join('|')}&" << # axis & labels
       "chs=710x400&chbh=25,15&chco=#{set_colors.join(',')}&" << # size and style
       "chdl=#{set_labels.join('|')}&chdlp=r&" << # legend
-      "chtt=Monthly Balances By Risk Class" # title
+      "chtt=Monthly Balances By Risk Class (TEUR)" # title
   end
 
 end
