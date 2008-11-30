@@ -8,7 +8,7 @@ module BalanceSheetHelper
     # collect credit data
     colors.reverse_each do |colspec|
       risk_class_id = colspec.first
-      values = dataset.collect {|m| m[:credit_by_risk_class][risk_class_id].to_i / 1000  || 0.0 }
+      values = dataset.collect {|m| m[:credit_by_risk_class][risk_class_id].to_i / 1000.0 }
       if !values.all?(&:zero?)
         set_colors << colspec[1][:credit]
         set_labels << "credit: #{colspec[1][:label]}"
@@ -19,7 +19,7 @@ module BalanceSheetHelper
     # collect debit data 
     colors.each do |colspec|
       risk_class_id = colspec.first
-      values = dataset.collect {|m| m[:debit_by_risk_class][risk_class_id].to_i / 1000 || 0.0 }
+      values = dataset.collect {|m| m[:debit_by_risk_class][risk_class_id].to_i / 1000.0 }
       if !values.all?(&:zero?)
         set_colors << colspec[1][:debit]
         set_labels << "debit: #{colspec[1][:label]}"
@@ -27,12 +27,12 @@ module BalanceSheetHelper
       end
     end
     
-    total_labels = dataset.collect {|m| "%0.3f" % (m[:total] / 1000) }
+    total_labels = dataset.collect {|m| "%0.3f" % (m[:total].to_i / 1000.0) }
     month_labels = dataset.collect {|m| m[:date].strftime("%b") }
     year_labels = dataset.collect {|m| m[:date].month == 1 ? m[:date].year : "" }
     
-    lower_bound = dataset.collect {|m| m[:debit] }.min / 1000
-    upper_bound = dataset.collect {|m| m[:credit] }.max / 1000
+    lower_bound = dataset.collect {|m| m[:debit] }.min.to_i / 1000.0
+    upper_bound = dataset.collect {|m| m[:credit] }.max.to_i / 1000.0
     margin = [lower_bound, upper_bound].map(&:abs).max * 0.1 # 10% margin to x-axis
     lower_bound -= margin
     upper_bound += margin
