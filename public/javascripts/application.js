@@ -1,10 +1,3 @@
-// provide I18n aware number renderer
-Ext.util.Format.numberRenderer = (function() {
-  return (function (value) {
-    return (String(value).replace('.', Ext.form.NumberField.prototype.decimalSeparator)); 
-  });
-});
-
 // adapted from: http://www.thinksharp.org/extformat-extension-for-thousands-separator-formatting/
 // example usage:
 //   var euroFormatter = Ext.util.Format.currencyRenderer(2, "€");
@@ -26,5 +19,12 @@ Ext.apply(Ext.util.Format, {
 
       return x1 + x2 + (symbol ? ' ' + symbol : '');
     });
+  },
+
+  numberRenderer: function() {
+    return (function (value) {
+      return (String(value).replace('.', Ext.util.Format.decimalSeparator));
+    });
   }
 });
+
