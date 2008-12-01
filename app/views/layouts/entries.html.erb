@@ -4,14 +4,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>Entries</title>
+  <title><%= t 'entries.title' %></title>
   <% js_locale = I18n.locale.split('-').first %>
-  <%= stylesheet_link_tag    "ext_scaffold", "../ext/resources/css/ext-all.css" %>
+  <%= stylesheet_link_tag    "ext_scaffold", "../ext/resources/css/ext-all.css", "entry" %>
   <%= javascript_include_tag "../ext/adapter/ext/ext-base.js",
                              Rails.env.development? ? "../ext/ext-all-debug.js" : "../ext/ext-all.js",
                              "ext_scaffold.js",
                              "fixed-numberfield.js",
                              "ext-ux-xdatefield.js",
+                             "ext_scaffold/entry.js",
                              "../ext/build/locale/ext-lang-#{js_locale}.js" %>
   <%= javascript_include_tag "application-lang-#{js_locale}.js" if File.exist?(File.join(Rails.root,*%W(public javascripts application-lang-#{js_locale}.js))) %>
   <% javascript_tag do %>

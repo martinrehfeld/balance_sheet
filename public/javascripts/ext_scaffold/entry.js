@@ -27,6 +27,8 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
   deleteFailedText: 'Delete operation failed. The record might have been deleted by someone else.',
   savingMessage: 'Saving...',
   saveFailedText: 'Save operation failed. The record might have been deleted by someone else.',
+  searchText:'Search',
+  searchTipText:'Type a text to search and press Enter',
 
   //
   // custom properties
@@ -266,7 +268,9 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
           }, '->'
         ],
         plugins:[new Ext.ux.grid.Search({
-                    position:'top'
+                    position:'top',
+                    searchText: scaffoldPanel.searchText,
+                    searchTipText: scaffoldPanel.searchTipText
                 })],
         listeners: {
           // show form with record on double-click
