@@ -2,7 +2,7 @@ module BalanceSheetHelper
   
   def google_chart_url(dataset, colors)
     data_values, set_colors, set_labels = [], [], []
-    
+
     # collect credit/debit data, colors and labels for legend
     [ {:reverse_each => :credit}, {:each => :debit} ].each do |processing_instruction|
       iterator, key = processing_instruction.keys.first, processing_instruction.values.first
@@ -16,19 +16,19 @@ module BalanceSheetHelper
         end
       end
     end
-        
+
     # collect x axis labels
     total_labels = dataset.collect {|m| number_with_delimiter(m[:total].to_i) }
     month_labels = dataset.collect {|m| m[:date].to_datetime.to_s(:short_month) }
     year_labels = dataset.collect {|m| m[:date].month == 1 ? m[:date].year : "" }
-    
+
     # calculate y axis bounds
     lower_bound = dataset.collect {|m| m[:debit] }.min.to_i / 1000.0
     upper_bound = dataset.collect {|m| m[:credit] }.max.to_i / 1000.0
     margin = [lower_bound, upper_bound].map(&:abs).max * 0.1 # 10% margin to x-axis
     lower_bound -= margin unless lower_bound.zero?
     upper_bound += margin
-    
+
     "http://chart.apis.google.com/chart?" <<
       "cht=bvs&" << # vertical stacked bar chart
       "chd=t:#{data_values.map{|s| s.join(',')}.join('|')}&" << # data sets
