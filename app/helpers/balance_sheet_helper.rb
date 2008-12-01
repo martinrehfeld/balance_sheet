@@ -27,8 +27,8 @@ module BalanceSheetHelper
       end
     end
     
-    total_labels = dataset.collect {|m| "%0.3f" % (m[:total].to_i / 1000.0) }
-    month_labels = dataset.collect {|m| m[:date].strftime("%b") }
+    total_labels = dataset.collect {|m| number_with_delimiter(m[:total].to_i) }
+    month_labels = dataset.collect {|m| m[:date].to_datetime.to_s(:short_month) }
     year_labels = dataset.collect {|m| m[:date].month == 1 ? m[:date].year : "" }
     
     lower_bound = dataset.collect {|m| m[:debit] }.min.to_i / 1000.0
@@ -41,7 +41,7 @@ module BalanceSheetHelper
       "cht=bvs&" << # vertical stacked bar chart
       "chd=t:#{data_values.map{|s| s.join(',')}.join('|')}&" << # data sets
       "chds=#{lower_bound},#{upper_bound}&chxr=2,#{lower_bound},#{upper_bound}|5,#{lower_bound},#{upper_bound}&" << # scaling and y axis range
-      "chxt=x,x,y,t,t,r&chxl=0:|#{month_labels.join('|')}|1:|#{year_labels.join('|')}|4:||||||Total:|3:|#{total_labels.join('|')}&" << # axis & labels
+      "chxt=x,x,y,t,t,r&chxl=0:|#{month_labels.join('|')}|1:|#{year_labels.join('|')}|4:||||||Total (EUR):|3:|#{total_labels.join('|')}&" << # axis & labels
       "chs=710x400&chbh=25,15&chco=#{set_colors.join(',')}&" << # size and style
       "chdl=#{set_labels.join('|')}&chdlp=r&" << # legend
       "chtt=Monthly Balances By Risk Class (TEUR)" # title
