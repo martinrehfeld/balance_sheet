@@ -11,6 +11,7 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.ext_json
   def index
+    Account.clear_cache # make sure account total balances get re-calculated
     respond_to do |format|
       format.html     # index.html.erb (no data required)
       format.ext_json { render :json => @entries.to_ext_json(:methods => [:account_name, :entry_type_name, :account_balance], :class => Entry, :count => Entry.count(options_from_search(Entry))) }

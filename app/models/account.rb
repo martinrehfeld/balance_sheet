@@ -24,6 +24,10 @@ class Account < ActiveRecord::Base
       Account.find(id).monthly_balance(9999,12)
     end
     memoize :total_balance
+    
+    def clear_cache
+      unmemoize_all
+    end
   end
 
   def entries_in_reverse_chronological_order(last_date)
