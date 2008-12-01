@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 private
 
   def set_locale_from_request
-    requested_locale = request.preferred_language_from(%w{en de-DE}) || 'en'
+    requested_locale = request.preferred_language_from(%w{en-US de-DE}) || 'en-US'
     I18n.locale = requested_locale
     logger.debug "Using locale #{requested_locale} for this request"
   end
