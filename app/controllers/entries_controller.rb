@@ -7,6 +7,7 @@ class EntriesController < ApplicationController
   end
   before_filter :find_entries, :only => [ :index ]
   before_filter :find_entry, :only => [ :update, :destroy ]
+  before_filter :normalize_value, :only => [ :create, :update ]
 
   # GET /entries
   # GET /entries.ext_json
@@ -44,6 +45,13 @@ protected
   def find_entries
     pagination_state = update_pagination_state_with_params!(Entry)
     @entries = Entry.find(:all, options_from_pagination_state(pagination_state).merge(options_from_search(Entry)))
+  end
+  
+  def normalize_value
+    # ExtJS sadly submits a localized value to us, so we have to make sure it is parsable to a valid float ourselves
+    if params[:entry] && params[:entry][:value]
+      params[:entry][:value].gsub!(/#{I18n.t 'number.format.separator'}/, '.')
+    end
   end
 
 end
