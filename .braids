@@ -27,6 +27,13 @@ vendor/rails:
   branch: 2-2-stable
   squash: true
   remote: git://github.com/rails/rails.git
+vendor/plugins/http_accept_language: 
+  local_branch: braid/git/vendor/plugins/http-accept-language/master
+  type: git
+  revision: 
+  branch: master
+  squash: true
+  remote: git://github.com/iain/http_accept_language.git
 vendor/plugins/javascript_test: 
   local_branch: braid/git/vendor/plugins/javascript-test/master
   type: git
