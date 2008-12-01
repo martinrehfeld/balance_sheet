@@ -19,5 +19,7 @@ private
   class Helper
     include Singleton
     include ::BalanceSheetHelper
+    include ActionView::Helpers::TranslationHelper
+    include ActionView::Helpers::NumberHelper
   end
 end
