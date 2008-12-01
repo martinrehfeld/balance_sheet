@@ -20,6 +20,13 @@ vendor/plugins/ext_scaffold:
   branch: master
   squash: true
   remote: git://github.com/martinrehfeld/ext_scaffold.git
+vendor/plugins/localized_dates: 
+  local_branch: braid/git/vendor/plugins/localized-dates/master
+  type: git
+  revision: 
+  branch: master
+  squash: true
+  remote: git://github.com/clemens/localized_dates.git
 vendor/rails: 
   local_branch: braid/git/vendor/rails/2-2-stable
   type: git
@@ -27,13 +34,6 @@ vendor/rails:
   branch: 2-2-stable
   squash: true
   remote: git://github.com/rails/rails.git
-vendor/plugins/http_accept_language: 
-  local_branch: braid/git/vendor/plugins/http-accept-language/master
-  type: git
-  revision: 
-  branch: master
-  squash: true
-  remote: git://github.com/iain/http_accept_language.git
 vendor/plugins/javascript_test: 
   local_branch: braid/git/vendor/plugins/javascript-test/master
   type: git
@@ -41,3 +41,10 @@ vendor/plugins/javascript_test:
   branch: master
   squash: true
   remote: git://github.com/martinrehfeld/javascript_test.git
+vendor/plugins/http_accept_language: 
+  local_branch: braid/git/vendor/plugins/http-accept-language/master
+  type: git
+  revision: 
+  branch: master
+  squash: true
+  remote: git://github.com/iain/http_accept_language.git
