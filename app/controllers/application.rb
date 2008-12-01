@@ -13,11 +13,11 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
   
-  before_filter :set_locale
+  before_filter :set_locale_from_request
   
 private
 
-  def set_locale
-    I18n.locale = 'de-DE'
+  def set_locale_from_request
+    I18n.locale = request.preferred_language_from(%w{en de-DE})
   end
 end
