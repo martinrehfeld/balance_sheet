@@ -34,7 +34,7 @@ module BalanceSheetHelper
     lower_bound = dataset.collect {|m| m[:debit] }.min.to_i / 1000.0
     upper_bound = dataset.collect {|m| m[:credit] }.max.to_i / 1000.0
     margin = [lower_bound, upper_bound].map(&:abs).max * 0.1 # 10% margin to x-axis
-    lower_bound -= margin
+    lower_bound -= margin unless lower_bound.zero?
     upper_bound += margin
     
     "http://chart.apis.google.com/chart?" <<
