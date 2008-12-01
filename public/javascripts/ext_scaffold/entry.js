@@ -29,6 +29,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
   saveFailedText: 'Save operation failed. The record might have been deleted by someone else.',
   searchText:'Search',
   searchTipText:'Type a text to search and press Enter',
+  balanceLabel: 'Balance',
 
   //
   // custom properties
@@ -151,11 +152,17 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
         groupField: 'entry[account_id]'
     });
 
+
+    // column model with custom renderers
+
+    var dateRenderer = Ext.util.Format.dateRenderer(Ext.form.DateField.prototype.format);
+    var currencyRenderer = Ext.util.Format.currencyRenderer(2, "EUR");
+
     var cm = new Ext.grid.ColumnModel([
        { header: scaffoldPanel.labels['entry[account_id]'], dataIndex: 'entry[account_id]', hideable: false }
-      ,{ header: scaffoldPanel.labels['entry[effective_date]'], dataIndex: 'entry[effective_date]', renderer: Ext.util.Format.dateRenderer(Ext.form.DateField.prototype.format) }
+      ,{ header: scaffoldPanel.labels['entry[effective_date]'], dataIndex: 'entry[effective_date]', renderer: dateRenderer }
       ,{ header: scaffoldPanel.labels['entry[entry_type_id]'], dataIndex: 'virtual_attributes[entry_type_name]' }
-      ,{ header: scaffoldPanel.labels['entry[value]'], dataIndex: 'entry[value]' }
+      ,{ header: scaffoldPanel.labels['entry[value]'], dataIndex: 'entry[value]', renderer: currencyRenderer }
       ,{ header: scaffoldPanel.labels['entry[notes]'], dataIndex: 'entry[notes]' }
     ]);
 
@@ -217,7 +224,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
         ds: ds,
         cm: cm,
         view: new Ext.grid.GroupingView({
-          groupTextTpl: '{[values.rs[0].data["virtual_attributes[account_name]"]]} ({[values.rs.length]} {[values.rs.length > 1 ? "Entries" : "Entry"]}, Balance: {[values.rs[0].data["virtual_attributes[account_balance]"]]} EUR)',
+          groupTextTpl: '{[values.rs[0].data["virtual_attributes[account_name]"]]} (' + scaffoldPanel.balanceLabel + ': {[Ext.util.Format.currencyRenderer(2, "EUR")(values.rs[0].data["virtual_attributes[account_balance]"])]})',
           enableGroupingMenu: false,
           hideGroupedColumn: true,
           startCollapsed: true

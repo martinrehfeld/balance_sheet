@@ -4,6 +4,11 @@ if (Ext.form.NumberField) {
   });
 }
 
+Ext.apply(Ext.util.Format, {
+  decimalSeparator : ',',
+  thousandSeparator : '.'
+});
+
 // override Ext default translations for DateField
 if (Ext.form.DateField) {
    Ext.apply(Ext.form.DateField.prototype, {
@@ -42,6 +47,17 @@ if (ExtScaffold.Entry) {
     savingMessage: 'Speichern...',
     saveFailedText: 'Das Speichern ist fehlgeschlagen.  Die Buchung ist evtl. von einem anderen Benutzer gelöscht worden.',
     searchText:'Suchen',
-    searchTipText:'Suchbegriff eintippen und die Eingabetaste drücken'
+    searchTipText:'Suchbegriff eintippen und die Eingabetaste drücken',
+    balanceLabel: 'Saldo'
+  });
+}
+
+if (ExtScaffold.FormPanel) {
+  Ext.apply(ExtScaffold.FormPanel.prototype, {
+    modeButtonTexts: {
+      'show': { ok: false, cancel: 'Schließen' },
+      'edit': { ok: 'Speichern', cancel: 'Abbruch' },
+      'new':  { ok: 'Anlegen', cancel: 'Abbruch' }
+    }
   });
 }
