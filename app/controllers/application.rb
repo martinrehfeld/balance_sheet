@@ -18,6 +18,6 @@ class ApplicationController < ActionController::Base
 private
 
   def set_locale_from_request
-    I18n.locale = request.preferred_language_from(%w{en de-DE})
+    I18n.locale = request.preferred_language_from(%w{en de-DE}) || 'en'
   end
 end
