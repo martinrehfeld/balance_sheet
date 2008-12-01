@@ -314,7 +314,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
         baseParams: scaffoldPanel.baseParams,
         items: [
           { fieldLabel: scaffoldPanel.labels['entry[account_id]'], name:'virtual_attributes[account_name]', hiddenName: 'entry[account_id]', xtype: 'combo', store: scaffoldPanel.accountNamesStore, triggerAction: 'all', forceSelection: true },
-          { fieldLabel: scaffoldPanel.labels['entry[effective_date]'], name: 'entry[effective_date]', xtype: 'datefield', format: 'm/d/Y' },
+          { fieldLabel: scaffoldPanel.labels['entry[effective_date]'], name: 'entry[effective_date]', xtype: 'xdatefield' },
           { fieldLabel: scaffoldPanel.labels['entry[entry_type_id]'], name:'virtual_attributes[entry_type_name]', hiddenName: 'entry[entry_type_id]', xtype: 'combo', store: scaffoldPanel.entryTypeNamesStore, triggerAction: 'all', forceSelection: true },
           { fieldLabel: scaffoldPanel.labels['entry[value]'], name: 'entry[value]', xtype: 'fixednumberfield', decimalPrecision: 2 },
           { fieldLabel: scaffoldPanel.labels['entry[notes]'], name: 'entry[notes]', xtype: 'textarea' }

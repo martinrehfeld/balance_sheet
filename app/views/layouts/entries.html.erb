@@ -11,6 +11,7 @@
                              Rails.env.development? ? "../ext/ext-all-debug.js" : "../ext/ext-all.js",
                              "ext_scaffold.js",
                              "fixed-numberfield.js",
+                             "ext-ux-xdatefield.js",
                              "../ext/build/locale/ext-lang-#{js_locale}.js" %>
   <%= javascript_include_tag "application-lang-#{js_locale}.js" if File.exist?(File.join(Rails.root,*%W(public javascripts application-lang-#{js_locale}.js))) %>
   <% javascript_tag do %>
