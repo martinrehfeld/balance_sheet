@@ -2,6 +2,12 @@
 # by Clemens Kofler (clemens@railway.at)
 
 de-DE:
+  balance_sheet:
+    total: Summe (EUR)
+    chart_title: Monatliche Salden nach Risikoklasse (TEUR)
+    credit: 'Vermögen'
+    debit: 'Verbindlichkeit'
+  
   date:
     formats:
       default: "%d.%m.%Y"

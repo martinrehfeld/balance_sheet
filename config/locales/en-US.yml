@@ -1,4 +1,10 @@
 "en-US":
+  balance_sheet:
+    total: Total (EUR)
+    chart_title: Monthly Balances By Risk Class (TEUR)
+    credit: 'credit'
+    debit: 'debit'
+
   number:
     # Used in number_with_delimiter()
     # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'

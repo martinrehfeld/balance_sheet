@@ -8,6 +8,7 @@
   <%= yield :head %>
 </head>
 <body>
+<p style="color: green"><%= flash[:notice] %></p>
 <%= yield %>
 </body>
 </html>

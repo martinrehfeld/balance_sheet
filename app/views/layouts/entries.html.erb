@@ -5,11 +5,14 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>Entries</title>
+  <% js_locale = I18n.locale.split('-').first %>
   <%= stylesheet_link_tag    "ext_scaffold", "../ext/resources/css/ext-all.css" %>
   <%= javascript_include_tag "../ext/adapter/ext/ext-base.js",
                              Rails.env.development? ? "../ext/ext-all-debug.js" : "../ext/ext-all.js",
                              "ext_scaffold.js",
-                             "../ext/build/locale/ext-lang-en.js" %>
+                             "fixed-numberfield.js",
+                             "../ext/build/locale/ext-lang-#{js_locale}.js" %>
+  <%= javascript_include_tag "application-lang-#{js_locale}.js" if File.exist?(File.join(Rails.root,*%W(public javascripts application-lang-#{js_locale}.js))) %>
   <% javascript_tag do %>
     Ext.BLANK_IMAGE_URL = '<%= image_path '/ext/resources/images/default/s.gif' %>';
   <% end %>
