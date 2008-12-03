@@ -6,7 +6,7 @@ class BalanceSheetController < ApplicationController
     @colors  = RiskClass.all(:order => 'id').collect{|e| [e.id, { :debit => e.debit_color || "000000", :credit => e.credit_color || "000000", :label => e.name }] }
     respond_to do |format|
       format.html # index.html.erb
-      format.png { redirect_to view_helper.google_chart_url(@dataset, @colors) }
+      format.png { redirect_to view_helper.balances_by_risk_class_chart_url(@dataset, @colors) }
     end
   end
   

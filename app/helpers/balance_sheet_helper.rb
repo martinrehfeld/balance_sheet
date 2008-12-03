@@ -1,6 +1,6 @@
 module BalanceSheetHelper
   
-  def google_chart_url(dataset, colors)
+  def balances_by_risk_class_chart_url(dataset, colors)
     data_values, set_colors, set_labels = [], [], []
 
     # collect credit/debit data, colors and labels for legend
