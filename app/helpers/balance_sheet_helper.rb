@@ -28,12 +28,16 @@ module BalanceSheetHelper
     margin = [lower_bound, upper_bound].map(&:abs).max * 0.1 # 10% margin to x-axis
     lower_bound -= margin unless lower_bound.zero?
     upper_bound += margin
+    
+    # calculate position of zero line (percent of chart height)
+    zero_position = lower_bound.abs / [lower_bound, upper_bound].map(&:abs).sum
 
     "http://chart.apis.google.com/chart?" <<
       "cht=bvs&" << # vertical stacked bar chart
       "chd=t:#{data_values.map{|s| s.join(',')}.join('|')}&" << # data sets
       "chds=#{lower_bound},#{upper_bound}&chxr=2,#{lower_bound},#{upper_bound}|5,#{lower_bound},#{upper_bound}&" << # scaling and y axis range
       "chxt=x,x,y,t,t,r&chxl=0:|#{month_labels.join('|')}|1:|#{year_labels.join('|')}|4:||||||#{t 'balance_sheet.total'}:|3:|#{total_labels.join('|')}&" << # axis & labels
+      "chm=h,AAAAAA,0,#{'%0.5f' % zero_position},0.5,-1&" << # zero line
       "chs=710x400&chbh=25,15&chco=#{set_colors.join(',')}&" << # size and style
       "chdl=#{set_labels.join('|')}&chdlp=r&" << # legend
       "chtt=#{t 'balance_sheet.chart_title'}" # title
