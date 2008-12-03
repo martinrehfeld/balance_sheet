@@ -1,9 +1,13 @@
-<div id="chart">
-  <img src="<%=h balances_by_risk_class_chart_url(@dataset, @colors) %>" />
-</div>
 <p>
   <%= link_to "Edit entries...", entries_path %> |
   <%= link_to "Edit accounts...", accounts_path %> |
   <%= link_to "Edit entry types...", entry_types_path %> |
   <%= link_to "Edit risk classes...", risk_classes_path %>
 </p>
+
+<div id="balances-by-risk-class-chart">
+  <img src="<%=h balances_by_risk_class_chart_url(@dataset, @colors) %>" />
+</div>
+<div id="future-payments-chart">
+  <img src="<%=h future_payments_chart_url(@dataset) %>" />
+</div>

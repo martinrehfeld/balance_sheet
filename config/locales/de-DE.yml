@@ -4,9 +4,14 @@
 de-DE:
   balance_sheet:
     total: Summe (EUR)
-    chart_title: Monatliche Salden nach Risikoklasse (TEUR)
-    credit: 'Vermögen'
-    debit: 'Verbindlichkeit'
+    balances_by_risk_class_chart_title: Monatliche Salden nach Risikoklasse (TEUR)
+    future_payments_chart_title: Zukünftige Zahlungen (TEUR)
+    credit: Vermögen
+    debit: Verbindlichkeit
+    balances: Salden
+    deposits: Einzahlungen
+    payouts: Auszahlungen
+    sum: Total
 
   entries:
     title: Buchungen

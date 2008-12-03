@@ -1,9 +1,14 @@
 "en-US":
   balance_sheet:
     total: Total (EUR)
-    chart_title: Monthly Balances By Risk Class (TEUR)
-    credit: 'credit'
-    debit: 'debit'
+    balances_by_risk_class_chart_title: Monthly Balances By Risk Class (TEUR)
+    future_payments_chart_title: Future Payments (TEUR)
+    credit: credit
+    debit: debit
+    balances: Balances
+    deposits: Deposits
+    payouts: Payouts
+    sum: Total
 
   entries:
     title: Entries

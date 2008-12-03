@@ -10,6 +10,12 @@ class BalanceSheetController < ApplicationController
     end
   end
   
+  def future_payments
+    respond_to do |format|
+      format.png { redirect_to view_helper.future_payments_chart_url(@dataset) }
+    end
+  end
+  
 private
 
   def view_helper
