@@ -1,5 +1,5 @@
 class BalanceSheet
-  def self.monthly_balances(from_year, from_month, to_year, to_month)
+  def self.monthly_totals(from_year, from_month, to_year, to_month)
     dataset = []
     accounts = Account.all
 
@@ -9,7 +9,7 @@ class BalanceSheet
       debit_by_risk_class = {}
 
       accounts.each do |account|
-        balance = account.monthly_balance(date.year, date.month)
+        balance = account.monthly_total(date.year, date.month)
 
         if account.liability?
           debit  += balance
@@ -33,5 +33,16 @@ class BalanceSheet
     end
     
     dataset
+  end
+  
+  def self.future_payments(date)
+    balance  = Account.all.collect {|a| a.monthly_balance(date.year, date.month) }.sum
+    payouts  = Account.all.collect {|a| a.payouts_till_month(date.year, date.month) }.sum
+    deposits = Account.all.collect {|a| a.deposits_till_month(date.year, date.month) }.sum
+
+    {
+      :balance  => balance, :payouts  => payouts,:deposits => deposits,
+      :total    => balance - payouts + deposits
+    }
   end
 end

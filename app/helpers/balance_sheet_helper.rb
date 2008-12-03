@@ -42,19 +42,24 @@ module BalanceSheetHelper
   end
   
   def future_payments_chart_url(dataset)
-    dataset = { :balance => 60000, :payouts => 10000, :deposits => 30000, :total => 80000 }
-    values = [ 0, dataset[:balance],
+    # all data points for min/max/bounds/hline calculations
+    values = [ 0,
+               dataset[:balance],
                dataset[:balance] - dataset[:payouts],
                dataset[:balance] - dataset[:payouts] + dataset[:deposits],
-               dataset[:total] ].map {|v| v.to_i / 1000.0}
+               dataset[:total]
+             ].map {|v| v.to_i / 1000.0}
     
-    payouts_base = dataset[:balance] - dataset[:payouts] > 0 ? dataset[:balance] - dataset[:payouts] : 0
-    data_values =  [ [ 0, payouts_base, payouts_base, 0] ] # invisible "pedastal" for payout/deposits bars
+    # calculate payout/deposit bar sections
+    payouts_base, payouts_positive_section, payouts_negative_section = split_bar(dataset[:balance], dataset[:balance] - dataset[:payouts])
+    deposits_base, deposits_positive_section, deposits_negative_section = split_bar(dataset[:balance] - dataset[:payouts], dataset[:total])
+
+    data_values =  [ [ 0, payouts_base, deposits_base, 0] ]     # invisible "pedastals" for payout/deposits bars
     data_values << [ dataset[:balance], 0, 0, dataset[:total] ] # balance and total
-    data_values << [ 0, 10000, 0, 0 ] # positive section of payouts
-    data_values << [ 0, 0, 0 ,0 ] # negative section of payouts
-    data_values << [ 0, 0, 30000, 0 ] # positive section of deposits
-    data_values << [ 0, 0, 0 ,0 ] # negative section of deposits
+    data_values << [ 0, payouts_positive_section, 0, 0 ]        # positive section of payouts
+    data_values << [ 0, payouts_negative_section, 0 ,0 ]        # negative section of payouts
+    data_values << [ 0, 0, deposits_positive_section, 0 ]       # positive section of deposits
+    data_values << [ 0, 0, deposits_negative_section, 0 ]       # negative section of deposits
     
     total_labels = [dataset[:balance], -dataset[:payouts], dataset[:deposits], dataset[:total] ].collect {|v| number_with_delimiter(v) + '€' }
 
@@ -87,6 +92,24 @@ private
   def bounds_with_margin(lower_bound, upper_bound, relative_margin = 0.1)
     margin = [lower_bound, upper_bound].map(&:abs).max * relative_margin
     return lower_bound.zero? ? lower_bound : lower_bound - margin, upper_bound + margin
+  end
+  
+  def split_bar(y_from, y_to)
+    if (y_from > 0 && y_to > 0) || (y_from < 0 && y_to < 0) # bar does not cross zero axis
+      base = y_from.abs < y_to.abs ? y_from : y_to
+      if y_from > 0 # is bar completely in positive section?
+        positive_section = (y_to - y_from).abs
+        negative_section = 0
+      else          # bar is completely in negative section
+        positive_section = 0
+        negative_section = -(y_to - y_from).abs
+      end
+    else # bar crosses zero axis
+      base = 0
+      positive_section = y_from > 0 ? y_from : y_to
+      negative_section = y_from < 0 ? y_from : y_to
+    end
+    return base, positive_section, negative_section
   end
 
 end
