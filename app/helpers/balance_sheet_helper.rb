@@ -61,7 +61,7 @@ module BalanceSheetHelper
     data_values << [ 0, 0, deposits_positive_section, 0 ]       # positive section of deposits
     data_values << [ 0, 0, deposits_negative_section, 0 ]       # negative section of deposits
     
-    total_labels = [dataset[:balance], -dataset[:payouts], dataset[:deposits], dataset[:total] ].collect {|v| number_with_delimiter(v) + '€' }
+    total_labels = [dataset[:balance], -dataset[:payouts], dataset[:deposits], dataset[:total] ].collect {|v| number_with_delimiter(v.round) + '€' }
 
     # calculate y axis bounds
     lower_bound, upper_bound = bounds_with_margin(values.min, values.max)
