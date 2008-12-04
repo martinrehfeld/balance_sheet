@@ -5,7 +5,8 @@ class Account < ActiveRecord::Base
   has_many   :entries
   
   def monthly_total(year, month)
-    total = monthly_balance(year, month).abs
+    total = monthly_balance(year, month)
+    total = -total if self.liability?
 
     # add non-cumulative entries' values to balance
     last_of_month = Date.civil(year, month).end_of_month
