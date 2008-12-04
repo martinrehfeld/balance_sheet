@@ -18,7 +18,7 @@ module BalanceSheetHelper
     end
 
     # collect x axis labels
-    total_labels = dataset.collect {|m| number_with_delimiter(m[:total].to_i) }
+    total_labels = dataset.collect {|m| number_with_delimiter(m[:total].round) }
     month_labels = dataset.collect {|m| m[:date].to_datetime.to_s(:short_month) }
     year_labels = dataset.collect {|m| m[:date].month == 1 ? m[:date].year : "" }
 
