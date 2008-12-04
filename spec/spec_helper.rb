@@ -45,3 +45,12 @@ Spec::Runner.configure do |config|
   # 
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
 end
+
+# add preferred_language_from to TestRequest (introduced to real request by http_accept_language plugin)
+module ActionController
+  class TestRequest
+    def preferred_language_from(supported_locales)
+      nil
+    end
+  end
+end

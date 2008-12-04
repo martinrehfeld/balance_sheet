@@ -4,7 +4,8 @@ describe RiskClass do
   before(:each) do
     @valid_attributes = {
       :name => "value for name",
-      :color => "value for color"
+      :credit_color => "value for credit_color",
+      :debit_color => "value for debit_color"
     }
   end
 
