@@ -1,15 +1,15 @@
 class BalanceSheet
-  def self.monthly_totals(from_year, from_month, to_year, to_month)
+  def self.monthly_totals(from, to)
     dataset = []
     accounts = Account.all
 
-    Date.civil(from_year, from_month).upto_by_month(Date.civil(to_year, to_month).end_of_month) do |date|
+    Date.civil(from.year, from.month).upto_by_month(Date.civil(to.year, to.month).end_of_month) do |date|
+      date = date.end_of_month
       credit = debit = 0
-      credit_by_risk_class = {}
-      debit_by_risk_class = {}
+      credit_by_risk_class, debit_by_risk_class = {}, {}
 
       accounts.each do |account|
-        balance = account.monthly_total(date.year, date.month)
+        balance = account.total(date)
 
         if account.liability?
           debit  += balance
@@ -36,9 +36,9 @@ class BalanceSheet
   end
   
   def self.future_payments(date)
-    balance  = Account.all.collect {|a| a.monthly_balance(date.year, date.month) }.sum
-    payouts  = Account.all.collect {|a| a.payouts_till_month(date.year, date.month) }.sum
-    deposits = Account.all.collect {|a| a.deposits_till_month(date.year, date.month) }.sum
+    balance  = Account.all.collect {|a| a.balance(date) }.sum
+    payouts  = Account.all.collect {|a| a.payouts_till date }.sum
+    deposits = Account.all.collect {|a| a.deposits_till date }.sum
 
     {
       :balance  => balance, :payouts  => payouts,:deposits => deposits,
@@ -50,7 +50,7 @@ class BalanceSheet
     # { <account_class.name> => <account_total>, ... }
     Hash[*Account.all.group_by(&:account_class).map {|e|
       [e.first && e.first.name, e.second.collect {|a|
-        a.monthly_total(date.year, date.month)
+        a.total(date)
       }.sum]
     }.flatten]
   end

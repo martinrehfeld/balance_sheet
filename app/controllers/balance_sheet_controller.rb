@@ -29,7 +29,7 @@ private
   def populate_balances_dataset
     ltm_from = Date.today << 11
     ltm_to   = Date.today
-    @balances_dataset = BalanceSheet.monthly_totals(ltm_from.year, ltm_from.month, ltm_to.year, ltm_to.month)
+    @balances_dataset = BalanceSheet.monthly_totals(ltm_from, ltm_to)
   end
   
   def populate_future_payments_dataset
