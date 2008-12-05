@@ -3,6 +3,8 @@
     total: Total (EUR)
     balances_by_risk_class_chart_title: Monthly Balances By Risk Class (TEUR)
     future_payments_chart_title: Future Payments (TEUR)
+    balances_by_account_class_chart_title: Account Classes
+    unknown_account_class: unnamed
     credit: credit
     debit: debit
     balances: Balances

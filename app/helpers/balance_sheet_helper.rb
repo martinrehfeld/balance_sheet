@@ -79,6 +79,23 @@ module BalanceSheetHelper
       "chtt=#{t 'balance_sheet.future_payments_chart_title'}" # title
   end
   
+  def balances_by_account_class_chart_url(dataset)
+    values, labels = [], []
+    dataset.each do |account_class, total|
+      next if total < 0 # credit account classes only
+      values << total
+      labels << account_class || t('balance_sheet.unknown_account_class')
+    end
+
+    "http://chart.apis.google.com/chart?" <<
+      "cht=p&" << # 3D pie chart
+      "chd=t:#{values.join(',')}&" << # data set
+      "chds=0,#{values.max}&" << # data scaling
+      "chl=#{labels.join('|')}&" << # labels
+      "chs=350x175&chco=9DFF00&" << # size
+      "chtt=#{t 'balance_sheet.balances_by_account_class_chart_title'}" # title
+  end
+  
 private
 
   def zero_axis(lower_bound, upper_bound)

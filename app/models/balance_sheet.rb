@@ -45,4 +45,12 @@ class BalanceSheet
       :total    => balance - payouts + deposits
     }
   end
+  
+  def self.funds_by_account_class(date)
+    Hash[*Account.all.group_by(&:account_class).map {|e|
+      [e.first && e.first.name, e.second.collect {|a|
+        a.monthly_total(date.year, date.month)
+      }.sum]
+    }.flatten]
+  end
 end
