@@ -15,7 +15,12 @@
 
 <p>
   <b>Risk class:</b>
-  <%=h @account.risk_class_id %>
+  <%=h @account.risk_class && @account.risk_class.name %>
+</p>
+
+<p>
+  <b>Account class:</b>
+  <%=h @account.account_class && @account.account_class.name %>
 </p>
 
 <p>

@@ -6,6 +6,7 @@
     <th>Liability</th>
     <th>Show as future payment?</th>
     <th>Risk class</th>
+    <th>Account class</th>
     <th>Notes</th>
   </tr>
 
@@ -14,7 +15,8 @@
     <td><%=h account.name %></td>
     <td><%=h account.liability %></td>
     <td><%=h account.show_balance_as_future_payment %></td>
-    <td><%=h account.risk_class_id %></td>
+    <td><%=h account.risk_class && account.risk_class.name %></td>
+    <td><%=h account.account_class && account.account_class.name %></td>
     <td><%=h account.notes %></td>
     <td><%= link_to 'Show', account %></td>
     <td><%= link_to 'Edit', edit_account_path(account) %></td>

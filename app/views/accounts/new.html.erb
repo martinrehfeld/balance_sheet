@@ -17,7 +17,11 @@
   </p>
   <p>
     <%= f.label :risk_class_id %><br />
-    <%= f.text_field :risk_class_id %>
+    <%= f.select :risk_class_id, RiskClass.all.collect {|r| [r.name, r.id]}%>
+  </p>
+  <p>
+    <%= f.label :account_class_id %><br />
+    <%= f.select :account_class_id, AccountClass.all.collect {|r| [r.name, r.id]}%>
   </p>
   <p>
     <%= f.label :notes %><br />
