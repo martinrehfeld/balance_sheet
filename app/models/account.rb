@@ -2,6 +2,7 @@ class Account < ActiveRecord::Base
   extend ActiveSupport::Memoizable
 
   belongs_to :risk_class
+  belongs_to :account_class
   has_many   :entries
   
   def monthly_total(year, month)

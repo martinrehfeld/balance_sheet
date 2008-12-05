@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :account_classes
+
   map.resources :entries
   map.resources :entry_types
   map.resources :risk_classes

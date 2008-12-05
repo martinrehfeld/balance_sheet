@@ -1,0 +1,20 @@
+<h1>Listing account_classes</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% for account_class in @account_classes %>
+  <tr>
+    <td><%=h account_class.name %></td>
+    <td><%= link_to 'Show', account_class %></td>
+    <td><%= link_to 'Edit', edit_account_class_path(account_class) %></td>
+    <td><%= link_to 'Destroy', account_class, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New account_class', new_account_class_path %>
