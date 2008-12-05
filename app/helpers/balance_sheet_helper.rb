@@ -92,7 +92,7 @@ module BalanceSheetHelper
       "chd=t:#{values.join(',')}&" << # data set
       "chds=0,#{values.max}&" << # data scaling
       "chl=#{labels.join('|')}&" << # labels
-      "chs=350x175&chco=9DFF00&" << # size
+      "chs=360x175&chco=9DFF00&" << # size
       "chtt=#{t 'balance_sheet.balances_by_account_class_chart_title'}" # title
   end
   
