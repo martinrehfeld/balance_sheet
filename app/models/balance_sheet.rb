@@ -47,6 +47,7 @@ class BalanceSheet
   end
   
   def self.funds_by_account_class(date)
+    # { <account_class.name> => <account_total>, ... }
     Hash[*Account.all.group_by(&:account_class).map {|e|
       [e.first && e.first.name, e.second.collect {|a|
         a.monthly_total(date.year, date.month)
