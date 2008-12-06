@@ -3,7 +3,7 @@ class Account < ActiveRecord::Base
 
   belongs_to :risk_class
   belongs_to :account_class
-  has_many   :entries
+  has_many   :entries, :dependent => :destroy
   
   def total(date = Date.civil(9999,12,31))
     total = inverted_balance(date, true)
