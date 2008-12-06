@@ -9,8 +9,8 @@ module BalanceSheetHelper
         risk_class_id = colspec.first
         values = dataset.collect {|m| m[:"#{key}_by_risk_class"][risk_class_id].to_i / 1000.0 }
         if !values.all?(&:zero?)
-          set_colors << colspec[1][key]
-          set_labels << "#{t "balance_sheet.#{key}"}: #{colspec[1][:label]}"
+          set_colors << colspec.second[key]
+          set_labels << "#{t "balance_sheet.#{key}"}: #{colspec.second[:label]}"
           data_values << values
         end
       end
