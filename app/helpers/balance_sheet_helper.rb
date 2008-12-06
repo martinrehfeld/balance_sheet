@@ -81,7 +81,7 @@ module BalanceSheetHelper
   def balances_by_account_class_chart_url(dataset)
     values, labels = [], []
     dataset.each do |account_class, total|
-      next if total < 0 # credit account classes only
+      next if total < 0 # accounts with credit balance only
       values << total
       labels << account_class || t('balance_sheet.unknown_account_class')
     end
@@ -111,17 +111,15 @@ private
   end
   
   def split_bar(y_from, y_to)
+    base = positive_section = negative_section = 0
     if (y_from > 0 && y_to > 0) || (y_from < 0 && y_to < 0) # bar does not cross zero axis
       base = y_from.abs < y_to.abs ? y_from : y_to
       if y_from > 0 # is bar completely in positive section?
         positive_section = (y_to - y_from).abs
-        negative_section = 0
       else          # bar is completely in negative section
-        positive_section = 0
         negative_section = -(y_to - y_from).abs
       end
     else # bar crosses zero axis
-      base = 0
       positive_section = y_from > 0 ? y_from : y_to
       negative_section = y_from < 0 ? y_from : y_to
     end
