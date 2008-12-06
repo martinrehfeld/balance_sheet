@@ -33,11 +33,11 @@ private
   end
   
   def populate_future_payments_dataset
-    @future_payments_dataset = BalanceSheet.future_payments(Date.today)
+    @future_payments_dataset = BalanceSheet.future_payments(Date.today.end_of_month)
   end
 
   def populate_account_class_dataset
-    @account_class_dataset = BalanceSheet.funds_by_account_class(Date.today)
+    @account_class_dataset = BalanceSheet.funds_by_account_class(Date.today.end_of_month)
   end
 
   def view_helper
