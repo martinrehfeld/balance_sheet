@@ -4,9 +4,8 @@ module BalanceSheetHelper
     data_values, set_colors, set_labels = [], [], []
 
     # collect credit/debit data, colors and labels for legend
-    [ {:reverse_each => :credit}, {:each => :debit} ].each do |processing_instruction|
-      iterator, key = processing_instruction.keys.first, processing_instruction.values.first
-      colors.send iterator do |colspec|
+    [ :credit, :debit ].each do |key|
+      colors.reverse_each do |colspec|
         risk_class_id = colspec.first
         values = dataset.collect {|m| m[:"#{key}_by_risk_class"][risk_class_id].to_i / 1000.0 }
         if !values.all?(&:zero?)
