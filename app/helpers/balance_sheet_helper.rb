@@ -87,7 +87,7 @@ module BalanceSheetHelper
     end
 
     "http://chart.apis.google.com/chart?" <<
-      "cht=p&" << # 3D pie chart
+      "cht=p&" << # 2D pie chart
       "chd=t:#{values.join(',')}&" << # data set
       "chds=0,#{values.max}&" << # data scaling
       "chl=#{labels.join('|')}&" << # labels
