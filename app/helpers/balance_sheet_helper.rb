@@ -80,7 +80,7 @@ module BalanceSheetHelper
   
   def balances_by_account_class_chart_url(dataset, colors)
     values, labels, set_colors = [], [], []
-    dataset.each do |account_class, total|
+    dataset.sort {|a,b| b.second <=> a.second}.each do |account_class, total|
       next if total < 0 # accounts with credit balance only
       values << total
       labels << (colors[account_class] ? colors[account_class][:label] : t('balance_sheet.unknown_account_class'))
