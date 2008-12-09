@@ -80,7 +80,10 @@ module BalanceSheetHelper
   
   def balances_by_account_class_chart_url(dataset, colors)
     values, labels, set_colors = [], [], []
-    dataset.sort {|a,b| b.second <=> a.second}.each do |account_class, total|
+    
+    dataset.reject {|s| s.first.nil?}.sort {|a,b|
+      brightness(colors[b.first][:color]) <=> brightness(colors[a.first][:color])
+    }.each do |account_class, total|
       next if total < 0 # accounts with credit balance only
       values << total
       labels << (colors[account_class] ? colors[account_class][:label] : t('balance_sheet.unknown_account_class'))
@@ -98,6 +101,10 @@ module BalanceSheetHelper
   end
   
 private
+
+  def brightness(color)
+    color.scan(/../).inject(0) {|sum,v| sum + v.hex } rescue 0
+  end
 
   def zero_axis(lower_bound, upper_bound)
     horizontal_position(0, lower_bound, upper_bound)
