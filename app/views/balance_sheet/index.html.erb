@@ -7,11 +7,11 @@
 </p>
 
 <div id="balances-by-risk-class-chart" style="padding-bottom:20px">
-  <img src="<%=h balances_by_risk_class_chart_url(@balances_dataset, @colors) %>" />
+  <img src="<%=h balances_by_risk_class_chart_url(@balances_dataset, @balances_colors) %>" />
 </div>
 <div id="future-payments-chart" style="float:left">
   <img src="<%=h future_payments_chart_url(@future_payments_dataset) %>" />
 </div>
 <div id="balances-by-account-class-chart">
-  <img src="<%=h balances_by_account_class_chart_url(@account_class_dataset) %>" />
+  <img src="<%=h balances_by_account_class_chart_url(@account_class_dataset, @account_class_colors) %>" />
 </div>

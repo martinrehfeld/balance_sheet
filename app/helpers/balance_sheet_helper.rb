@@ -78,20 +78,22 @@ module BalanceSheetHelper
       "chtt=#{t 'balance_sheet.future_payments_chart_title'}" # title
   end
   
-  def balances_by_account_class_chart_url(dataset)
-    values, labels = [], []
+  def balances_by_account_class_chart_url(dataset, colors)
+    values, labels, set_colors = [], [], []
     dataset.each do |account_class, total|
       next if total < 0 # accounts with credit balance only
       values << total
-      labels << account_class || t('balance_sheet.unknown_account_class')
+      labels << (colors[account_class] ? colors[account_class][:label] : t('balance_sheet.unknown_account_class'))
+      set_colors << colors[account_class][:color]
     end
+    set_colors = ['9DFF00'] if set_colors.compact.empty?
 
     "http://chart.apis.google.com/chart?" <<
       "cht=p&" << # 2D pie chart
       "chd=t:#{values.join(',')}&" << # data set
       "chds=0,#{values.max}&" << # data scaling
       "chl=#{labels.join('|')}&" << # labels
-      "chs=360x175&chco=9DFF00&" << # size
+      "chs=360x175&chco=#{set_colors.join(',')}&" << # size and colors
       "chtt=#{t 'balance_sheet.balances_by_account_class_chart_title'}" # title
   end
   

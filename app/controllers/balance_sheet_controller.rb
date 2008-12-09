@@ -5,10 +5,9 @@ class BalanceSheetController < ApplicationController
   before_filter :populate_account_class_dataset, :only => [:index, :account_classes]
   
   def index
-    @colors  = RiskClass.all(:order => 'id').collect{|e| [e.id, { :debit => e.debit_color || "999999", :credit => e.credit_color || "999999", :label => e.name }] }
     respond_to do |format|
       format.html # index.html.erb
-      format.png { redirect_to view_helper.balances_by_risk_class_chart_url(@balances_dataset, @colors) }
+      format.png { redirect_to view_helper.balances_by_risk_class_chart_url(@balances_dataset, @balances_colors) }
     end
   end
   
@@ -20,7 +19,7 @@ class BalanceSheetController < ApplicationController
   
   def account_classes
     respond_to do |format|
-      format.png { redirect_to view_helper.balances_by_account_class_chart_url(@account_class_dataset) }
+      format.png { redirect_to view_helper.balances_by_account_class_chart_url(@account_class_dataset, @account_class_colors) }
     end
   end
   
@@ -30,6 +29,7 @@ private
     ltm_from = Date.today << 11
     ltm_to   = Date.today
     @balances_dataset = BalanceSheet.monthly_totals(ltm_from, ltm_to)
+    @balances_colors  = RiskClass.all(:order => 'id').collect{|e| [e.id, { :debit => e.debit_color || "999999", :credit => e.credit_color || "999999", :label => e.name }] }
   end
   
   def populate_future_payments_dataset
@@ -38,6 +38,7 @@ private
 
   def populate_account_class_dataset
     @account_class_dataset = BalanceSheet.funds_by_account_class(Date.today.end_of_month)
+    @account_class_colors  = Hash[*AccountClass.all(:order => 'id').collect{|c| [c.id, { :color => c.color, :label => c.name }] }.flatten]
   end
 
   def view_helper
