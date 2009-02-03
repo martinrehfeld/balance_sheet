@@ -84,7 +84,7 @@ module BalanceSheetHelper
     dataset.reject {|s| s.first.nil?}.sort {|a,b|
       brightness(colors[b.first][:color]) <=> brightness(colors[a.first][:color])
     }.each do |account_class, total|
-      next if total < 0 # accounts with credit balance only
+      next if total <= 0 # accounts with positive credit balance only
       values << total
       labels << (colors[account_class] ? colors[account_class][:label] : t('balance_sheet.unknown_account_class'))
       set_colors << colors[account_class][:color]
