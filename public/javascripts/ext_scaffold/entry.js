@@ -234,26 +234,11 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
           listeners: {
             // populate form fields when a row is selected
             'rowselect': function(sm, row, rec) {
-              var form = scaffoldPanel.getFormPanel().getForm();
+              var fp = scaffoldPanel.getFormPanel();
 
-              // UGLY WORKAROUND -- BAD MOJO
-              // when creating new records all stores of the form's ComboBoxes would lose
-              // most of their items somewhere along the way, except the one item that was
-              // used in the new record!
-              // So we re-assign the stores here to make sure all items are available
-              // TODO: find the actual reason why the stores lose data and fix it!
               scaffoldPanel.selectedRecordId = rec.data.id;
-              form.findField('entry[account_id]').store = new Ext.data.SimpleStore({
-                  fields: ['value','text'],
-                  data: scaffoldPanel.accountNamesStore
-              });
-              form.findField('entry[entry_type_id]').store = new Ext.data.SimpleStore({
-                  fields: ['value','text'],
-                  data: scaffoldPanel.entryTypeNamesStore
-              });
-              // END OF WORKAROUND
-
-              form.loadRecord(rec);
+              fp.clearAllStoreFilters(); // make sure ComboBoxes will accept record values
+              fp.getForm().loadRecord(rec);
             }
           }
         }),
@@ -399,6 +384,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
           
           fp.setFormMode('show');
           if (sm.hasSelection()) {
+            fp.clearAllStoreFilters(); // make sure ComboBoxes will accept record values
             fp.getForm().loadRecord(sm.getSelected()); // reload previous record version
           } else {
             fp.getForm().reset();
