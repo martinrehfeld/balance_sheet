@@ -3,7 +3,7 @@
 
 de-DE:
   balance_sheet:
-    total: Summe (EUR)
+    total: Summe (TEUR)
     balances_by_risk_class_chart_title: Monatliche Salden nach Risikoklasse (TEUR)
     future_payments_chart_title: Zukünftige Zahlungen (TEUR)
     balances_by_account_class_chart_title: Vermögensverteilung

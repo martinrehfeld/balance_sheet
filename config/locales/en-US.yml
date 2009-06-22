@@ -1,6 +1,6 @@
 "en-US":
   balance_sheet:
-    total: Total (EUR)
+    total: Total (TEUR)
     balances_by_risk_class_chart_title: Monthly Balances By Risk Class (TEUR)
     future_payments_chart_title: Future Payments (TEUR)
     balances_by_account_class_chart_title: Account Classes
