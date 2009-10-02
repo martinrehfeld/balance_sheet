@@ -15,7 +15,7 @@ class EntriesController < ApplicationController
     Account.clear_cache # make sure account total balances get re-calculated
     respond_to do |format|
       format.html     # index.html.erb (no data required)
-      format.ext_json { render :json => @entries.to_ext_json(:methods => [:account_name, :entry_type_name, :account_balance], :class => Entry, :count => Entry.count(options_from_search(Entry))) }
+      format.ext_json { render :json => @entries.to_ext_json(:methods => [:account_name, :entry_type_name, :account_balance], :class => Entry, :count => count_entries) }
     end
   end
 
@@ -44,7 +44,11 @@ protected
   
   def find_entries
     pagination_state = update_pagination_state_with_params!(Entry)
-    @entries = Entry.find(:all, options_from_pagination_state(pagination_state).merge(options_from_search(Entry)))
+    @entries = Entry.in_visible_account.find(:all, options_from_pagination_state(pagination_state).merge(options_from_search(Entry)))
+  end
+  
+  def count_entries
+    Entry.in_visible_account.count(options_from_search(Entry))
   end
   
   def normalize_value
@@ -53,5 +57,15 @@ protected
       params[:entry][:value].gsub!(/#{I18n.t 'number.format.separator'}/, '.')
     end
   end
+  
+  # as we are using the in_visible_account scope we must make sure that the sort field is properly prefixed with then entries table name
+  def options_from_pagination_state_with_entries_prefix(pagination_state)
+    unless pagination_state[:sort_field].blank? || pagination_state[:sort_field] =~ /^entries\./
+      pagination_state[:sort_field] = "entries.#{pagination_state[:sort_field]}"
+    end
+    
+    options_from_pagination_state_without_entries_prefix(pagination_state)
+  end
+  alias_method_chain :options_from_pagination_state, :entries_prefix
 
 end

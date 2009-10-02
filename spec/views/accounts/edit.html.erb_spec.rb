@@ -18,6 +18,7 @@ describe "/accounts/edit.html.erb" do
     response.should have_tag("form[action=#{account_path(@account)}][method=post]") do
       with_tag('input#account_name[name=?]', "account[name]")
       with_tag('input#account_liability[name=?]', "account[liability]")
+      with_tag('input#account_hidden[name=?]', "account[hidden]")
       with_tag('textarea#account_notes[name=?]', "account[notes]")
     end
   end

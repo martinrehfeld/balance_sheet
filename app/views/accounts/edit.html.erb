@@ -24,6 +24,10 @@
     <%= f.select :account_class_id, AccountClass.all.collect {|r| [r.name, r.id]}%>
   </p>
   <p>
+    <%= f.label :hidden %><br />
+    <%= f.check_box :hidden %>
+  </p>
+  <p>
     <%= f.label :notes %><br />
     <%= f.text_area :notes %>
   </p>

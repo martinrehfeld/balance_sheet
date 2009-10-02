@@ -9,7 +9,7 @@
         layout: 'fit',
         items: new ExtScaffold.Entry({
           url: '<%= entries_path %>',
-          accountNamesStore: <%= Account.all.collect {|a| [a.id, a.name] }.to_json %>,
+          accountNamesStore: <%= Account.visible.all.collect {|a| [a.id, a.name] }.to_json %>,
           entryTypeNamesStore: <%= EntryType.all.collect {|t| [t.id, t.name] }.to_json %>
           <%= ",baseParams: { #{request_forgery_protection_token}: '#{form_authenticity_token}' }" if protect_against_forgery? %>
         })

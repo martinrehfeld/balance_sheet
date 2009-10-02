@@ -5,5 +5,4 @@ doc/api
 doc/app
 tmp/*.pid
 coverage
-db/schema.rb
 db/*.sqlite3

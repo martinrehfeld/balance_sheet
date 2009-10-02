@@ -5,6 +5,8 @@ class Account < ActiveRecord::Base
   belongs_to :account_class
   has_many   :entries, :dependent => :destroy
   
+  named_scope :visible, :conditions => ['hidden IS NULL OR hidden = ?', false]
+  
   def total(date = Date.civil(9999,12,31))
     total = inverted_balance(date, true)
 
