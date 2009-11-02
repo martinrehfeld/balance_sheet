@@ -1,9 +1,10 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  name: MyString
+non_cumulative:
+  id: 1
+  name: Non-cumulative entry
   cumulative: false
 
-two:
-  name: MyString
-  cumulative: false
+cumulative:
+  id: 2
+  name: Cumulative entry
+  cumulative: true
+
