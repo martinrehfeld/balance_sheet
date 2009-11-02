@@ -41,7 +41,7 @@ class BalanceSheet
     deposits = Account.all.collect {|a| a.deposits_till date }.sum
 
     {
-      :balance  => balance, :payouts  => payouts,:deposits => deposits,
+      :balance  => balance, :payouts => payouts, :deposits => deposits,
       :total    => balance - payouts + deposits
     }
   end
