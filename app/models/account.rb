@@ -34,7 +34,7 @@ class Account < ActiveRecord::Base
   
   def payouts_till(date)
     payouts = self.show_balance_as_future_payment ? inverted_balance(date, true) : 0.0
-    payouts = 0.0 if payouts > 0
+    payouts = 0.0 unless self.liability?
       
     payouts += non_cumulative_entry_sum(date) {|e|
       if self.liability?
@@ -47,7 +47,7 @@ class Account < ActiveRecord::Base
   
   def deposits_till(date)
     deposits = self.show_balance_as_future_payment ? inverted_balance(date, true) : 0.0
-    deposits = 0.0 if deposits < 0
+    deposits = 0.0 if self.liability?
   
     deposits += non_cumulative_entry_sum(date) {|e|
       if self.liability?
