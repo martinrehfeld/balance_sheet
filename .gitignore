@@ -4,5 +4,6 @@ tmp/**/*
 doc/api
 doc/app
 tmp/*.pid
+tmp/restart.txt
 coverage
 db/*.sqlite3
