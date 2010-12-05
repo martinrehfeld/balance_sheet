@@ -139,6 +139,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
               },[
                 { name: 'id', mapping: 'entry.id' }
                 ,{ name: 'entry[account_id]', mapping: 'entry.account_id', type: 'int' }
+                ,{ name: 'entry[account_identifier]', mapping: 'entry.account_identifier' }
                 ,{ name: 'entry[effective_date]', mapping: 'entry.effective_date', type: 'date', dateFormat: 'Y-m-d' }
                 ,{ name: 'entry[entry_type_id]', mapping: 'entry.entry_type_id', type: 'int' }
                 ,{ name: 'entry[value]', mapping: 'entry.value', type: 'float' }
@@ -148,8 +149,8 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
                 ,{ name: 'virtual_attributes[account_balance]', mapping: 'entry.account_balance' }
               ]),
         remoteSort: true, // turn on server-side sorting
-        sortInfo: {field: 'entry[account_id],entry[effective_date]', direction: 'ASC'},
-        groupField: 'entry[account_id]'
+        sortInfo: {field: 'entry[effective_date]', direction: 'DESC'},
+        groupField: 'entry[account_identifier]'
     });
 
 
@@ -160,6 +161,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
 
     var cm = new Ext.grid.ColumnModel([
        { header: scaffoldPanel.labels['entry[account_id]'], dataIndex: 'entry[account_id]', hideable: false }
+      ,{ header: scaffoldPanel.labels['entry[account_identifier]'], dataIndex: 'entry[account_identifier]', hideable: false }
       ,{ header: scaffoldPanel.labels['entry[effective_date]'], dataIndex: 'entry[effective_date]', renderer: dateRenderer }
       ,{ header: scaffoldPanel.labels['entry[entry_type_id]'], dataIndex: 'virtual_attributes[entry_type_name]' }
       ,{ header: scaffoldPanel.labels['entry[value]'], dataIndex: 'entry[value]', renderer: currencyRenderer }

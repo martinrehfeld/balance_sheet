@@ -22,10 +22,23 @@ describe Entry do
       entry = Entry.new(@valid_attributes.merge(:account_id => nil))
       entry.account_name.should be_nil
     end
-    
+
     it "should return the account.name of an associated account" do
       entry = Entry.new(@valid_attributes.merge(:account => Account.new(:name => 'account name')))
       entry.account_name.should == 'account name'
+    end
+  end
+
+  describe "account_identifier" do
+    it "should return an empty string when no account is associated" do
+      entry = Entry.new(@valid_attributes.merge(:account_id => nil))
+      entry.account_identifier.should == ''
+    end
+
+    it "should return the account.name followed by '-' and the account_id of an associated account" do
+      account = Account.create!(:name => 'account name')
+      entry = Entry.new(@valid_attributes.merge(:account => account))
+      entry.account_identifier.should == "account name-#{account.id}"
     end
   end
 
@@ -34,28 +47,28 @@ describe Entry do
       entry = Entry.new(@valid_attributes.merge(:entry_type_id => nil))
       entry.entry_type_name.should be_nil
     end
-    
+
     it "should return the account.name of an associated account" do
       entry = Entry.new(@valid_attributes.merge(:entry_type => EntryType.new(:name => 'type name')))
       entry.entry_type_name.should == 'type name'
     end
   end
-  
+
   describe "account_balance" do
     it "should return nil when no account is associated" do
       entry = Entry.new(@valid_attributes.merge(:entry_type_id => nil))
       entry.account_balance.should be_nil
     end
-    
+
     it "should return the total balance of the associated account" do
       account = Account.new(:name => 'account name')
       entry = Entry.new(@valid_attributes.merge(:account => account))
       Account.should_receive(:total_balance).with(account).and_return(123)
-      
+
       entry.account_balance.should == 123
     end
   end
-  
+
   it "should have a scope filtering out entries in hidden accounts" do
     a1 = Account.create!(:hidden => false)
     e1 = Entry.create!(@valid_attributes.merge(:account => a1))
