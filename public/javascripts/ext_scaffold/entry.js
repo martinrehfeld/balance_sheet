@@ -160,8 +160,7 @@ ExtScaffold.Entry = Ext.extend(Ext.Panel, {
     var currencyRenderer = Ext.util.Format.currencyRenderer(2, "EUR");
 
     var cm = new Ext.grid.ColumnModel([
-       { header: scaffoldPanel.labels['entry[account_id]'], dataIndex: 'entry[account_id]', hideable: false }
-      ,{ header: scaffoldPanel.labels['entry[account_identifier]'], dataIndex: 'entry[account_identifier]', hideable: false }
+       { header: scaffoldPanel.labels['entry[account_id]'], dataIndex: 'entry[account_identifier]', hideable: false }
       ,{ header: scaffoldPanel.labels['entry[effective_date]'], dataIndex: 'entry[effective_date]', renderer: dateRenderer }
       ,{ header: scaffoldPanel.labels['entry[entry_type_id]'], dataIndex: 'virtual_attributes[entry_type_name]' }
       ,{ header: scaffoldPanel.labels['entry[value]'], dataIndex: 'entry[value]', renderer: currencyRenderer }
