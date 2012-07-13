@@ -53,7 +53,7 @@ protected
 
   def normalize_value
     # ExtJS sadly submits a localized value to us, so we have to make sure it is parsable to a valid float ourselves
-    if params[:entry] && params[:entry][:value]
+    if params[:entry] && params[:entry][:value] && I18n.t('number.format.separator') != '.'
       params[:entry][:value].gsub!(/#{I18n.t 'number.format.separator'}/, '.')
     end
   end
