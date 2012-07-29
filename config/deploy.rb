@@ -7,7 +7,6 @@ set :run_method,        :run
 
 set :scm,               'git'
 set :deploy_via,        :remote_cache
-set :deploy_to,         "/var/rails/#{application}"
 
 set :user,              'www-data'
 set :repository,        'git@development.local:balance_sheet.git'
