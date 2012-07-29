@@ -16,7 +16,11 @@ role :app,              'intranet.local'
 role :web,              'intranet.local'
 role :db,               'intranet.local', :primary => true
 
+set :bundle_without,    [:development, :test, :tools]
+require 'bundler/capistrano'
+
 set :apacheinitscript,  '/etc/init.d/apache2'
+
 
 # =============================================================================
 # TASKS
