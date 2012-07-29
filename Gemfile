@@ -4,7 +4,7 @@ gem 'rails',          '~> 2.3'
 gem 'ffi',            '1.0.11' # just fixed because I could not build 1.1.1 on 10.8
 
 group :production do
-  gem 'mysql2'
+  gem 'mysql'
 end
 
 group :development, :test do
