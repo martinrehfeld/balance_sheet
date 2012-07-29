@@ -5,7 +5,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title><%= t 'entries.title' %></title>
-  <% js_locale = I18n.locale.split('-').first %>
+  <% js_locale = I18n.locale.to_s.split('-').first %>
   <%= stylesheet_link_tag    "ext_scaffold", "../ext/resources/css/ext-all.css", "entry" %>
   <%= javascript_include_tag "../ext/adapter/ext/ext-base.js",
                              Rails.env.development? ? "../ext/ext-all-debug.js" : "../ext/ext-all.js",
