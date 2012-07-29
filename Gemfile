@@ -7,7 +7,7 @@ group :production do
   gem 'mysql2'
 end
 
-group :devlopment, :test do
+group :development, :test do
   gem 'rspec-rails',    '1.3.3'
   gem 'sqlite3-ruby',   '1.2.5',   :require => 'sqlite3'
 end
