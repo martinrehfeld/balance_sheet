@@ -1,5 +1,5 @@
 module BalanceSheetHelper
-  
+
   def balances_by_risk_class_chart_url(dataset, colors)
     data_values, set_colors, set_labels = [], [], []
 
@@ -25,7 +25,7 @@ module BalanceSheetHelper
     lower_bound = dataset.collect {|m| m[:debit] }.min.to_i / 1000.0
     upper_bound = dataset.collect {|m| m[:credit] }.max.to_i / 1000.0
     lower_bound, upper_bound = bounds_with_margin(lower_bound, upper_bound)
-    
+
     # calculate position of zero line (percent of chart height)
     zero_position = zero_axis(lower_bound, upper_bound)
 
@@ -39,7 +39,32 @@ module BalanceSheetHelper
       "chdl=#{set_labels.join('|')}&chdlp=r&" << # legend
       "chtt=#{t 'balance_sheet.balances_by_risk_class_chart_title'}" # title
   end
-  
+
+  def asset_growth_chart_url(dataset)
+    data_values = dataset.collect {|m| m[:total].to_i / 1000.0 }
+
+    # collect x axis labels
+    total_labels = dataset.collect {|m| m[:date].month == 12 || m == dataset.last ? number_with_precision(m[:total].to_i / 1000.0, :precision => 1) : ""}
+    year_labels = dataset.collect {|m| m[:date].month == 1 ? m[:date].year : " " }
+
+    # calculate y axis bounds
+    lower_bound = dataset.collect {|m| m[:total].to_i }.min.to_i / 1000.0
+    lower_bound = 0 if lower_bound > 0
+    upper_bound = dataset.collect {|m| m[:total].to_i }.max.to_i / 1000.0
+    lower_bound, upper_bound = bounds_with_margin(lower_bound, upper_bound)
+
+    # calculate position of zero line (percent of chart height)
+    zero_position = zero_axis(lower_bound, upper_bound)
+
+    "http://chart.apis.google.com/chart?" <<
+      "cht=lc&" << # line chart
+      "chd=t:#{data_values.map(&:to_s).join(',')}&" << # data sets
+      "chds=#{lower_bound},#{upper_bound}&chxr=1,#{lower_bound},#{upper_bound}|4,#{lower_bound},#{upper_bound}&" << # scaling and y axis range
+      "chxt=x,y,t,t,r&chxs=0,0000DD,lt&chxtc=0,4&chxl=0:|#{year_labels.join('|')}|3:||||||#{t 'balance_sheet.total'}:|2:|#{total_labels.join('|')}&" << # axis & labels
+      "chs=710x300&chls=4&chco=9DFF00&" << # size and style
+      "chtt=#{t 'balance_sheet.asset_growth_chart_title'}" # title
+  end
+
   def future_payments_chart_url(dataset)
     # all data points for min/max/bounds/hline calculations
     values = [ 0,
@@ -48,7 +73,7 @@ module BalanceSheetHelper
                dataset[:balance] - dataset[:payouts] + dataset[:deposits],
                dataset[:total]
              ].map {|v| v.to_i / 1000.0}
-    
+
     # calculate payout/deposit bar sections
     payouts_base, payouts_positive_section, payouts_negative_section = split_bar(dataset[:balance], dataset[:balance] - dataset[:payouts])
     deposits_base, deposits_positive_section, deposits_negative_section = split_bar(dataset[:balance] - dataset[:payouts], dataset[:total])
@@ -59,7 +84,7 @@ module BalanceSheetHelper
     data_values << [ 0, payouts_negative_section, 0 ,0 ]        # negative section of payouts
     data_values << [ 0, 0, deposits_positive_section, 0 ]       # positive section of deposits
     data_values << [ 0, 0, deposits_negative_section, 0 ]       # negative section of deposits
-    
+
     total_labels = [dataset[:balance], -dataset[:payouts], dataset[:deposits], dataset[:total] ].collect {|v| "#{number_with_delimiter(v.round)}€" }
 
     # calculate y axis bounds
@@ -77,10 +102,10 @@ module BalanceSheetHelper
       "chs=350x250&chco=00000000,999999,FF6600,FF6600,9DFF00,9DFF00&chbh=30,50&" << # size and style
       "chtt=#{t 'balance_sheet.future_payments_chart_title'}" # title
   end
-  
+
   def balances_by_account_class_chart_url(dataset, colors)
     values, labels, set_colors = [], [], []
-    
+
     dataset.reject {|s| s.first.nil?}.sort {|a,b|
       brightness(colors[b.first][:color]) <=> brightness(colors[a.first][:color])
     }.each do |account_class, total|
@@ -99,7 +124,7 @@ module BalanceSheetHelper
       "chs=360x175&chco=#{set_colors.join(',')}&" << # size and colors
       "chtt=#{t 'balance_sheet.balances_by_account_class_chart_title'}" # title
   end
-  
+
 private
 
   def brightness(color)
@@ -109,16 +134,16 @@ private
   def zero_axis(lower_bound, upper_bound)
     horizontal_position(0, lower_bound, upper_bound)
   end
-  
+
   def horizontal_position(value, lower_bound, upper_bound)
     (lower_bound.abs + value) / [lower_bound, upper_bound].map(&:abs).sum
   end
-  
+
   def bounds_with_margin(lower_bound, upper_bound, relative_margin = 0.1)
     margin = [lower_bound, upper_bound].map(&:abs).max * relative_margin
     return lower_bound.zero? ? lower_bound : lower_bound - margin, upper_bound + margin
   end
-  
+
   def split_bar(y_from, y_to)
     base = positive_section = negative_section = 0
     if (y_from > 0 && y_to > 0) || (y_from < 0 && y_to < 0) # bar does not cross zero axis

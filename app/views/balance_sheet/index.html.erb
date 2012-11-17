@@ -6,6 +6,9 @@
   <%= link_to "Edit risk classes...", risk_classes_path %>
 </p>
 
+<div id="asset-growth-chart" style="padding-bottom:20px">
+  <img src="<%=h asset_growth_chart_url(@all_time_balances_dataset) %>" />
+</div>
 <div id="balances-by-risk-class-chart" style="padding-bottom:20px">
   <img src="<%=h balances_by_risk_class_chart_url(@balances_dataset, @balances_colors) %>" />
 </div>

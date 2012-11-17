@@ -1,9 +1,10 @@
-# German translations for Ruby on Rails 
+# German translations for Ruby on Rails
 # by Clemens Kofler (clemens@railway.at)
 
 de-DE:
   balance_sheet:
     total: Summe (TEUR)
+    asset_growth_chart_title: Gesamte Vermögensentwicklung (TEUR)
     balances_by_risk_class_chart_title: Monatliche Salden nach Risikoklasse (TEUR)
     future_payments_chart_title: Zukünftige Zahlungen (TEUR)
     balances_by_account_class_chart_title: Vermögensverteilung
@@ -30,7 +31,7 @@ de-DE:
     month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
     abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
     order: [ :day, :month, :year ]
-  
+
   time:
     formats:
       default: "%A, %e. %B %Y, %H:%M Uhr"
@@ -40,7 +41,7 @@ de-DE:
 
     am: "vormittags"
     pm: "nachmittags"
-      
+
   datetime:
     distance_in_words:
       half_a_minute: 'eine halbe Minute'
@@ -76,7 +77,7 @@ de-DE:
       over_x_years:
         one: 'mehr als 1 Jahr'
         other: 'mehr als {{count}} Jahre'
-      
+
   number:
     format:
       precision: 2
@@ -86,9 +87,9 @@ de-DE:
       format:
         unit: '€'
         format: '%n%u'
-        separator: 
-        delimiter: 
-        precision: 
+        separator:
+        delimiter:
+        precision:
     percentage:
       format:
         delimiter: ""
@@ -104,7 +105,7 @@ de-DE:
     array:
       sentence_connector: "und"
       skip_last_comma: true
-        
+
   activerecord:
     errors:
       template:

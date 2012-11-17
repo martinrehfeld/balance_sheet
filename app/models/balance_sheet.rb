@@ -31,10 +31,10 @@ class BalanceSheet
         :total => debit + credit
       }
     end
-    
+
     dataset
   end
-  
+
   def self.future_payments(date)
     balance  = Account.all.collect {|a| a.balance(date) }.sum
     payouts  = Account.all.collect {|a| a.payouts_till date }.sum
@@ -45,7 +45,7 @@ class BalanceSheet
       :total    => balance - payouts + deposits
     }
   end
-  
+
   def self.funds_by_account_class(date)
     # { <account_class.id> => <account_total>, ... }
     Hash[*Account.all.group_by(&:account_class).map {|e|
@@ -53,5 +53,10 @@ class BalanceSheet
         a.total(date)
       }.sum]
     }.flatten]
+  end
+
+  def self.data_start_time
+    e = Entry.find(:first, :order => 'effective_date ASC')
+    e ? e.effective_date : Date.today
   end
 end
