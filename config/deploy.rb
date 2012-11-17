@@ -9,7 +9,7 @@ set :scm,               'git'
 set :deploy_via,        :remote_cache
 
 set :user,              'www-data'
-set :repository,        'git@development.local:balance_sheet.git'
+set :repository,        'git@extranet.local:balance_sheet.git'
 set :branch,            'master'
 
 role :app,              'intranet.local'
