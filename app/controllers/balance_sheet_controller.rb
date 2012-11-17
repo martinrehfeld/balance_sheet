@@ -1,6 +1,6 @@
 class BalanceSheetController < ApplicationController
 
-  before_filter :populate_balances_dataset, :only => :index
+  before_filter :populate_balances_dataset, :only => [:index, :asset_growth]
   before_filter :populate_future_payments_dataset, :only => [:index, :future_payments]
   before_filter :populate_account_class_dataset, :only => [:index, :account_classes]
 
@@ -36,7 +36,6 @@ private
     ltm_from = Date.today << 11
     ltm_to   = Date.today
     @all_time_balances_dataset = BalanceSheet.monthly_totals(atm_from, ltm_to)
-    # @balances_dataset = BalanceSheet.monthly_totals(ltm_from, ltm_to)
     @balances_dataset = @all_time_balances_dataset.select {|m| m[:date] >= ltm_from }
     @balances_colors  = RiskClass.all(:order => 'id').collect{|e| [e.id, { :debit => e.debit_color || "999999", :credit => e.credit_color || "999999", :label => e.name }] }
   end
