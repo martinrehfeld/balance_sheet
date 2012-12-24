@@ -7,7 +7,7 @@ de-DE:
     asset_growth_chart_title: Gesamte Vermögensentwicklung (TEUR)
     balances_by_risk_class_chart_title: Monatliche Salden nach Risikoklasse (TEUR)
     future_payments_chart_title: Zukünftige Zahlungen (TEUR)
-    balances_by_account_class_chart_title: Vermögensverteilung
+    balances_by_account_class_chart_title: Vermögensverteilung (TEUR)
     unknown_account_class: unbekannt
     credit: Vermögen
     debit: Verbindlichkeit

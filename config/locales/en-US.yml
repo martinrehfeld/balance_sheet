@@ -4,7 +4,7 @@
     asset_growth_chart_title: All Time Asset Growth (TEUR)
     balances_by_risk_class_chart_title: Monthly Balances By Risk Class (TEUR)
     future_payments_chart_title: Future Payments (TEUR)
-    balances_by_account_class_chart_title: Account Classes
+    balances_by_account_class_chart_title: Account Classes (TEUR)
     unknown_account_class: unnamed
     credit: credit
     debit: debit
