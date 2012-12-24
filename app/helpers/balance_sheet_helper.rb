@@ -104,7 +104,7 @@ module BalanceSheetHelper
   end
 
   def balances_by_account_class_chart_url(dataset, colors)
-    values, labels, set_colors = [], [], []
+    values, labels, legend, set_colors = [], [], [], []
 
     dataset.reject {|s| s.first.nil?}.sort {|a,b|
       brightness(colors[b.first][:color]) <=> brightness(colors[a.first][:color])
@@ -112,6 +112,7 @@ module BalanceSheetHelper
       next if total <= 0 # accounts with positive credit balance only
       values << total
       labels << (colors[account_class] ? colors[account_class][:label] : t('balance_sheet.unknown_account_class'))
+      legend << "#{number_with_precision(total / 1000, 1)}"
       set_colors << colors[account_class][:color]
     end
     set_colors = ['9DFF00'] if set_colors.compact.empty?
@@ -121,6 +122,7 @@ module BalanceSheetHelper
       "chd=t:#{values.join(',')}&" << # data set
       "chds=0,#{values.max}&" << # data scaling
       "chl=#{labels.join('|')}&" << # labels
+      "chdl=#{legend.join('|')}&" << # legend
       "chs=360x175&chco=#{set_colors.join(',')}&" << # size and colors
       "chtt=#{t 'balance_sheet.balances_by_account_class_chart_title'}" # title
   end
