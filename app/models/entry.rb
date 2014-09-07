@@ -2,7 +2,7 @@ class Entry < ActiveRecord::Base
   belongs_to :entry_type
   belongs_to :account
 
-  named_scope :in_visible_account, :joins => :account, :conditions => ['accounts.hidden IS NULL OR accounts.hidden = ?', false]
+  named_scope :in_visible_account, :joins => :account, :conditions => ['accounts.hidden IS NOT NULL AND accounts.hidden <> ?', true]
 
   def account_name
     account && account.name
